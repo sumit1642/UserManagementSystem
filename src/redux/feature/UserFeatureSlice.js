@@ -2,14 +2,54 @@
 import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
+/**
+ * This code initializes a Redux state where "users" is stored as an object, with unique emailId as keys. If users exist in localStorage, it retrieves and parses them; otherwise, it initializes an empty object.
+ */
 const initialState = {
 	// `Store users as an object with unique emailId as keys - very important , learnt new thing`
-	users: localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : {},
+	users: localStorage.getItem("users")
+		? JSON.parse(localStorage.getItem("users"))
+		: {},
 };
 
+// Creating a userFeatureSlice
 export const userFeatureSlice = createSlice({
+	/**
+	 * Slice name is "user".
+	 *
+	 * @example
+	 * When we call a dispatch like this:
+	 *
+	 * ```js
+	 * dispatch(addUser({ emailId: "test@example.com", name: "John", age: 25 }));
+	 * ```
+	 *
+	 * Under the hood, Redux processes it like:
+	 *
+	 * - `"users/addUser"`
+	 * - `"users/removeUser"`
+	 * - `"users/updateUser"`
+	 *
+	 * For example, when calling the above dispatch function, Redux internally creates:
+	 *
+	 * ```json
+	 * {
+	 *   "type": "users/addUser",
+	 *   "payload": {
+	 *     "emailId": "test@example.com",
+	 *     "name": "John",
+	 *     "age": 25
+	 *   }
+	 * }
+	 * ```
+	 */
+
 	name: "user",
+
+	// initializing the state
 	initialState,
+
+	// Creating Reducers
 	reducers: {
 		addUser: (state, action) => {
 			const newUser = action.payload;
@@ -111,5 +151,6 @@ export const userFeatureSlice = createSlice({
 	},
 });
 
-export const { addUser, updateUser, resetUserData, deleteUser } = userFeatureSlice.actions;
+export const { addUser, updateUser, resetUserData, deleteUser } =
+	userFeatureSlice.actions;
 export default userFeatureSlice.reducer;
